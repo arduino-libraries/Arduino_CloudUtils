@@ -1,0 +1,111 @@
+name: Compile Examples
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/compile-examples.yml"
+      - "examples/**"
+      - "src/**"
+  push:
+    paths:
+      - ".github/workflows/compile-examples.yml"
+      - "examples/**"
+      - "src/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      # libraries to install for all boards
+      UNIVERSAL_LIBRARIES: |
+        - source-path: ./
+        - name: Arduino_DebugUtils
+      # sketch paths to compile (recursive) for all boards
+      UNIVERSAL_SKETCH_PATHS: |
+        - examples/lzssDecoder
+      SKETCHES_REPORTS_PATH: sketches-reports
+
+    strategy:
+      fail-fast: false
+
+      matrix:
+        board:
+          - fqbn: arduino:samd:mkr1000
+            type: mkr1000
+            artifact-name-suffix: arduino-samd-mkr1000
+          - fqbn: arduino:samd:mkrwifi1010
+            type: nina
+            artifact-name-suffix: arduino-samd-mkrwifi1010
+          - fqbn: arduino:samd:nano_33_iot
+            type: nina
+            artifact-name-suffix: arduino-samd-nano_33_iot
+          - fqbn: arduino:samd:mkrwan1300
+            type: wan
+            artifact-name-suffix: arduino-samd-mkrwan1300
+          - fqbn: arduino:samd:mkrgsm1400
+            type: gsm
+            artifact-name-suffix: arduino-samd-mkrgsm1400
+          - fqbn: arduino:samd:mkrnb1500
+            type: nb
+            artifact-name-suffix: arduino-samd-mkrnb1500
+          - fqbn: arduino:mbed_portenta:envie_m7
+            type: mbed_portenta
+            artifact-name-suffix: arduino-mbed_portenta-envie_m7
+          - fqbn: esp32:esp32:esp32
+            type: esp32
+            artifact-name-suffix: esp32-esp32-esp32
+          - fqbn: arduino:mbed_nano:nanorp2040connect
+            type: nina
+            artifact-name-suffix: arduino-mbed_nano-nanorp2040connect
+          - fqbn: arduino:mbed_nicla:nicla_vision
+            type: mbed_nicla
+            artifact-name-suffix: arduino-mbed_nicla-nicla_vision
+          - fqbn: arduino:mbed_opta:opta
+            type: mbed_opta
+            artifact-name-suffix: arduino-mbed_opta-opta
+          - fqbn: arduino:mbed_giga:giga
+            type: mbed_giga
+            artifact-name-suffix: arduino-mbed_giga-giga
+          - fqbn: arduino:renesas_portenta:portenta_c33
+            type: renesas_portenta
+            artifact-name-suffix: arduino-renesas_portenta-portenta_c33
+          - fqbn: arduino:renesas_uno:unor4wifi
+            type: renesas_uno
+            artifact-name-suffix: arduino-renesas_uno-unor4wifi
+          - fqbn: arduino:esp32:nano_nora
+            type: arduino_esp32
+            artifact-name-suffix: arduino-esp32-nano_nora
+          - fqbn: arduino:mbed_edge:edge_control
+            type: mbed_edge
+            artifact-name-suffix: arduino-mbed_edge-edge_control
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install ESP32 platform dependencies
+        if: matrix.board.type == 'esp32'
+        run: pip3 install pyserial
+
+      - name: Compile examples
+        uses: arduino/compile-sketches@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          platforms: ${{ matrix.platforms }}
+          fqbn: ${{ matrix.board.fqbn }}
+          libraries: |
+            ${{ env.UNIVERSAL_LIBRARIES }}
+            ${{ matrix.libraries }}
+          sketch-paths: |
+            ${{ env.UNIVERSAL_SKETCH_PATHS }}
+            ${{ matrix.sketch-paths }}
+          enable-deltas-report: "true"
+          sketches-report-path: ${{ env.SKETCHES_REPORTS_PATH }}
+
+      - name: Save memory usage change report as artifact
+        if: github.event_name == 'pull_request'
+        uses: actions/upload-artifact@v4
+        with:
+          name: sketches-report-${{ matrix.board.artifact-name-suffix }}
+          path: ${{ env.SKETCHES_REPORTS_PATH }}
