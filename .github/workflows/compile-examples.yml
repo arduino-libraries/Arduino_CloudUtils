@@ -24,6 +24,7 @@ jobs:
       # sketch paths to compile (recursive) for all boards
       UNIVERSAL_SKETCH_PATHS: |
         - examples/lzssDecoder
+        - examples/crc32
       SKETCHES_REPORTS_PATH: sketches-reports
 
     strategy:
