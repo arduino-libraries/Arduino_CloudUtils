@@ -9,7 +9,7 @@
 */
 
 
-#include <ArduinoLzss.h>
+#include <Arduino_Lzss.h>
 #include "lzssBuffer.h"
 
 void setup() {
