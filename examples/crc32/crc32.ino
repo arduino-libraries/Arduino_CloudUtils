@@ -16,10 +16,6 @@ void setup() {
     Serial.begin(9600);
     while(!Serial);
 
-    uint32_t value = 0;
-    uint64_t position = 0;
-    bool error = false;
-
     uint32_t crc32 = arduino::crc32::begin();
 
     crc32 = arduino::crc32::update(crc32, buffer, sizeof(buffer));
