@@ -9,6 +9,7 @@
 */
 
 #include "bpid.h"
+#include "../sha256/SHA256.h"
 
 namespace arduino { namespace bpid {
 
@@ -47,7 +48,9 @@ namespace arduino { namespace bpid {
         if (!get(data, sizeof(data))) {
             return String("");
         }
-        return hexEncode(data, sizeof(data));
+        uint8_t out[SHA256::HASH_SIZE];
+        arduino::sha256::oneshot(data, sizeof(data), out);
+        return hexEncode(out, sizeof(out));
     }
 
 }} // arduino::bpid
