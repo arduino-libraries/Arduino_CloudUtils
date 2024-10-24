@@ -10,19 +10,9 @@
 
 #include "bpid.h"
 #include "../sha256/SHA256.h"
+#include "../hex/hex.h"
 
 namespace arduino { namespace bpid {
-
-    static String hexEncode(uint8_t* in, uint32_t size) {
-        String out;
-        out.reserve((size * 2) + 1);
-
-        char *ptr = out.begin();
-        for (uint32_t i = 0; i < size; i++) {
-            ptr += sprintf(ptr, "%02X", in[i]);
-        }
-        return String(out.c_str());
-    }
 
     bool get(uint8_t* in, uint32_t size) {
         if (size < BOARD_PROVISIONING_ID_SIZE) {
@@ -50,7 +40,7 @@ namespace arduino { namespace bpid {
         }
         uint8_t out[SHA256::HASH_SIZE];
         arduino::sha256::oneshot(data, sizeof(data), out);
-        return hexEncode(out, sizeof(out));
+        return arduino::hex::encode(out, sizeof(out));
     }
 
 }} // arduino::bpid
