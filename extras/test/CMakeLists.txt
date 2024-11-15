@@ -24,10 +24,12 @@ include_directories(../../src)
 set(TEST_SRCS
   src/lzss/test_decoder.cpp
   src/crc32/test_crc32.cpp
+  src/crc16/test_crc16.cpp
 )
 
 set(TEST_DUT_SRCS
   ../../src/crc/crc32.cpp
+  ../../src/crc/crc16.cpp
 )
 
 ##########################################################################
