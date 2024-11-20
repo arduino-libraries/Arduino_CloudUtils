@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "sha256.h"
+#include "sha2.h"
 
 class SHA256 {
 
