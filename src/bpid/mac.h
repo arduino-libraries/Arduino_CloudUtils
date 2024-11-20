@@ -23,7 +23,7 @@
     #define IFACE_MAC_ADDR_LENGTH WL_MAC_ADDR_LENGTH
 #elif defined(ARDUINO_UNOR4_WIFI)
     #include <WiFi.h>
-    #define IFACE_MAC_ADDR_LENGTH WL_MAC_ADDR_LENGTH
+    #define IFACE_MAC_ADDR_LENGTH 6
 #elif defined(ARDUINO_OPTA)
     #include <Ethernet.h>
     #define IFACE_MAC_ADDR_LENGTH 6
