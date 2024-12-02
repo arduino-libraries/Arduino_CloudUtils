@@ -20,9 +20,9 @@ namespace arduino { namespace bpid {
      * This library contains the methods to get board provisioning id
      */
 
-    constexpr int BOARD_PROVISIONING_ID_SIZE  = arduino::ucid::UC_UID_SIZE +
-                                                arduino::mac::IFACE_MAC_SIZE +
-                                                arduino::csn::CRYPTO_SN_SIZE;
+    constexpr int BOARD_PROVISIONING_ID_SIZE  = UC_UID_SIZE +
+                                                IFACE_MAC_ADDR_LENGTH +
+                                                CRYPTO_SN_SIZE;
 
     bool get(uint8_t* in, uint32_t size);
     String get();

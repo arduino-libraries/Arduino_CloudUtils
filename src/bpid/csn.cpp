@@ -13,8 +13,8 @@
 namespace arduino { namespace csn {
 
     bool get(uint8_t *in, uint32_t size) {
-#if defined ARDUINO_UNOR4_WIFI
-    return false;
+#if CRYPTO_SN_SIZE == 0
+        return false;
 #else
         if (size < CRYPTO_SN_SIZE) {
             return false;

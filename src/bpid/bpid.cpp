@@ -22,11 +22,11 @@ namespace arduino { namespace bpid {
         if (!arduino::ucid::get(&in[offset], size)) {
             return false;
         }
-        offset += arduino::ucid::UC_UID_SIZE;
+        offset += UC_UID_SIZE;
         if (!arduino::mac::get(&in[offset], size - offset)) {
             return false;
         }
-        offset += arduino::mac::IFACE_MAC_SIZE;
+        offset += IFACE_MAC_ADDR_LENGTH;
         if (!arduino::csn::get(&in[offset], size - offset)) {
             return false;
         }
@@ -41,6 +41,7 @@ namespace arduino { namespace bpid {
         uint8_t out[SHA256::HASH_SIZE];
         arduino::sha256::oneshot(data, sizeof(data), out);
         return arduino::hex::encode(out, sizeof(out));
+        return String("");
     }
 
 }} // arduino::bpid

@@ -19,19 +19,24 @@ namespace arduino { namespace csn {
      */
 
 #if   defined(ARDUINO_NANO_RP2040_CONNECT) || \
-      defined(ARDUINO_SAMD_MKRWIFI1010)    || \
       defined(ARDUINO_SAMD_NANO_33_IOT)    || \
+      defined(ARDUINO_SAMD_MKRWIFI1010)    || \
+      defined(ARDUINO_SAMD_MKRGSM1400)     || \
+      defined(ARDUINO_SAMD_MKRWAN1300)     || \
+      defined(ARDUINO_SAMD_MKRWAN1310)     || \
+      defined(ARDUINO_SAMD_MKRNB1500)      || \
+      defined(ARDUINO_SAMD_MKR1000)        || \
       defined(ARDUINO_PORTENTA_H7_M7)      || \
       defined(ARDUINO_OPTA)                || \
       defined(ARDUINO_GIGA)
-    constexpr int CRYPTO_SN_SIZE  = 9;
+    #define CRYPTO_SN_SIZE 9
 #elif defined(ARDUINO_PORTENTA_C33)        || \
       defined(ARDUINO_NICLA_VISION)
-    constexpr int CRYPTO_SN_SIZE  = SE05X_SN_LENGTH;
+    #define CRYPTO_SN_SIZE SE05X_SN_LENGTH
 #elif defined(ARDUINO_UNOR4_WIFI)
-    constexpr int CRYPTO_SN_SIZE  = 6;
+    #define CRYPTO_SN_SIZE 6
 #else
-    #error "Unknown board"
+    #define CRYPTO_SN_SIZE 0
 #endif
 
     bool get(uint8_t *in, uint32_t size);
