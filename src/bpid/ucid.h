@@ -12,11 +12,6 @@
 
 #include <Arduino.h>
 
-namespace arduino { namespace ucid {
-    /*
-     * This library contains the methods to get board microcontroller id
-     */
-
 #if   defined(ARDUINO_SAMD_MKRWIFI1010) || \
       defined(ARDUINO_SAMD_NANO_33_IOT)
     #define UC_UID_SIZE 16
@@ -36,6 +31,11 @@ namespace arduino { namespace ucid {
 #else
     #define UC_UID_SIZE 0
 #endif
+
+namespace arduino { namespace ucid {
+    /*
+     * This library contains the methods to get board microcontroller id
+     */
 
     bool get(uint8_t *in, uint32_t size);
 

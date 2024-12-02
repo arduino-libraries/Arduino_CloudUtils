@@ -14,6 +14,8 @@ namespace arduino { namespace mac {
 
     bool get(uint8_t *in, uint32_t size) {
 #if IFACE_MAC_ADDR_LENGTH == 0
+        (void)in;
+        (void)size;
         return false;
 #else
         if (size < IFACE_MAC_ADDR_LENGTH) {

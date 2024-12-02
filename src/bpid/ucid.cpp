@@ -14,6 +14,8 @@ namespace arduino { namespace ucid {
 
     bool get(uint8_t *in, uint32_t size) {
 #if UC_UID_SIZE == 0
+        (void)in;
+        (void)size;
         return false;
 #else
         if (size < UC_UID_SIZE) {

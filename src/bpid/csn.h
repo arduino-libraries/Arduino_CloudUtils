@@ -11,12 +11,6 @@
 #pragma once
 
 #include <Arduino.h>
-#include <Arduino_SecureElement.h>
-
-namespace arduino { namespace csn {
-    /*
-     * This library contains the methods to get board microcontroller id
-     */
 
 #if   defined(ARDUINO_NANO_RP2040_CONNECT) || \
       defined(ARDUINO_SAMD_NANO_33_IOT)    || \
@@ -29,15 +23,23 @@ namespace arduino { namespace csn {
       defined(ARDUINO_PORTENTA_H7_M7)      || \
       defined(ARDUINO_OPTA)                || \
       defined(ARDUINO_GIGA)
+    #include <Arduino_SecureElement.h>
     #define CRYPTO_SN_SIZE 9
 #elif defined(ARDUINO_PORTENTA_C33)        || \
       defined(ARDUINO_NICLA_VISION)
+    #include <Arduino_SecureElement.h>
     #define CRYPTO_SN_SIZE SE05X_SN_LENGTH
 #elif defined(ARDUINO_UNOR4_WIFI)
+    #include <Arduino_SecureElement.h>
     #define CRYPTO_SN_SIZE 6
 #else
     #define CRYPTO_SN_SIZE 0
 #endif
+
+namespace arduino { namespace csn {
+    /*
+     * This library contains the methods to get board microcontroller id
+     */
 
     bool get(uint8_t *in, uint32_t size);
 
