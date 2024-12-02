@@ -24,14 +24,14 @@
       defined(ARDUINO_OPTA)                || \
       defined(ARDUINO_GIGA)
     #include <Arduino_SecureElement.h>
-    #define CRYPTO_SN_SIZE 9
+    #define CRYPTO_SN_SIZE 0
 #elif defined(ARDUINO_PORTENTA_C33)        || \
       defined(ARDUINO_NICLA_VISION)
     #include <Arduino_SecureElement.h>
-    #define CRYPTO_SN_SIZE SE05X_SN_LENGTH
+    #define CRYPTO_SN_SIZE 0
 #elif defined(ARDUINO_UNOR4_WIFI)
     #include <Arduino_SecureElement.h>
-    #define CRYPTO_SN_SIZE 6
+    #define CRYPTO_SN_SIZE 0
 #else
     #define CRYPTO_SN_SIZE 0
 #endif
