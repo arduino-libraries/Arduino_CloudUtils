@@ -25,7 +25,7 @@ void setup() {
     Serial.println(hexEncode(sha, sizeof(sha)));
 
     /* One-shot */
-    arduino::sha256::oneshot(buffer, sizeof(buffer), sha);
+    arduino::sha256::sha256(buffer, sizeof(buffer), sha);
     Serial.println(hexEncode(sha, sizeof(sha)));
 }
 
