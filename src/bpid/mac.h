@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include <Arduino.h>
+
 #if   defined(ARDUINO_NANO_RP2040_CONNECT) || \
       defined(ARDUINO_SAMD_MKRWIFI1010)    || \
       defined(ARDUINO_SAMD_NANO_33_IOT)    || \
@@ -28,7 +30,7 @@
     #include <Ethernet.h>
     #define IFACE_MAC_ADDR_LENGTH 6
 #else
-    #error "Unknown board"
+    #define IFACE_MAC_ADDR_LENGTH 0
 #endif
 
 namespace arduino { namespace mac {
@@ -44,8 +46,6 @@ namespace arduino { namespace mac {
      * ARDUINO_UNOR4_WIFI: not reversed
      * ARDUINO_OPTA: Ethernet.begin(NULL,0,0); reversed
      */
-
-    constexpr int IFACE_MAC_SIZE = IFACE_MAC_ADDR_LENGTH;
 
     bool get(uint8_t *in, uint32_t size);
 

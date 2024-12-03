@@ -21,10 +21,16 @@ jobs:
       UNIVERSAL_LIBRARIES: |
         - source-path: ./
         - name: Arduino_DebugUtils
+        - name: Arduino_SecureElement
+        - name: ArduinoECCX08
+        - name: WiFiNINA
       # sketch paths to compile (recursive) for all boards
       UNIVERSAL_SKETCH_PATHS: |
         - examples/lzssDecoder
         - examples/crc32
+        - examples/crc16
+        - examples/sha256
+        - examples/boardID
       SKETCHES_REPORTS_PATH: sketches-reports
 
     strategy:

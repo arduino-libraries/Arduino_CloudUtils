@@ -12,30 +12,35 @@
 
 #include <Arduino.h>
 
-namespace arduino { namespace ucid {
-    /*
-     * This library contains the methods to get board microcontroller id
-     */
-
-#if   defined(ARDUINO_SAMD_MKRWIFI1010) || \
-      defined(ARDUINO_SAMD_NANO_33_IOT)
-    constexpr int UC_UID_SIZE = 16;
+#if   defined(ARDUINO_SAMD_NANO_33_IOT)    || \
+      defined(ARDUINO_SAMD_MKRWIFI1010)    || \
+      defined(ARDUINO_SAMD_MKRGSM1400)     || \
+      defined(ARDUINO_SAMD_MKRWAN1300)     || \
+      defined(ARDUINO_SAMD_MKRWAN1310)     || \
+      defined(ARDUINO_SAMD_MKRNB1500)      || \
+      defined(ARDUINO_SAMD_MKR1000)
+    #define UC_UID_SIZE 16
 #elif defined(ARDUINO_PORTENTA_H7_M7)   || \
       defined(ARDUINO_NICLA_VISION)     || \
       defined(ARDUINO_OPTA)             || \
       defined(ARDUINO_GIGA)
-    constexpr int UC_UID_SIZE  = 12;
+    #define UC_UID_SIZE 12
 #elif defined(ARDUINO_PORTENTA_C33)     || \
       defined(ARDUINO_UNOR4_WIFI)
-    constexpr int UC_UID_SIZE  = 16;
+    #define UC_UID_SIZE 16
 #elif defined(ARDUINO_NANO_RP2040_CONNECT)
     extern "C" {
         #include "hardware/flash.h"
     }
-    constexpr int UC_UID_SIZE  = FLASH_UNIQUE_ID_SIZE_BYTES;
+    #define UC_UID_SIZE FLASH_UNIQUE_ID_SIZE_BYTES
 #else
-    #error "Unknown board"
+    #define UC_UID_SIZE 0
 #endif
+
+namespace arduino { namespace ucid {
+    /*
+     * This library contains the methods to get board microcontroller id
+     */
 
     bool get(uint8_t *in, uint32_t size);
 
