@@ -12,8 +12,13 @@
 
 #include <Arduino.h>
 
-#if   defined(ARDUINO_SAMD_MKRWIFI1010) || \
-      defined(ARDUINO_SAMD_NANO_33_IOT)
+#if   defined(ARDUINO_SAMD_NANO_33_IOT)    || \
+      defined(ARDUINO_SAMD_MKRWIFI1010)    || \
+      defined(ARDUINO_SAMD_MKRGSM1400)     || \
+      defined(ARDUINO_SAMD_MKRWAN1300)     || \
+      defined(ARDUINO_SAMD_MKRWAN1310)     || \
+      defined(ARDUINO_SAMD_MKRNB1500)      || \
+      defined(ARDUINO_SAMD_MKR1000)
     #define UC_UID_SIZE 16
 #elif defined(ARDUINO_PORTENTA_H7_M7)   || \
       defined(ARDUINO_NICLA_VISION)     || \
