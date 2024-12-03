@@ -38,7 +38,7 @@
 
 namespace arduino { namespace csn {
     /*
-     * This library contains the methods to get board microcontroller id
+     * This library contains the methods to get crypto serial number
      */
 
     bool get(uint8_t *in, uint32_t size);
