@@ -38,7 +38,7 @@ namespace arduino { namespace sha256 {
     inline void finalize(sha256_ctx * ctx, uint8_t digest[SHA256_DIGEST_SIZE]) {
         return sha256_final(ctx, digest);
     }
-    inline void oneshot(const unsigned char *input, unsigned int ilen, unsigned char *output) {
+    inline void sha256(const unsigned char *input, unsigned int ilen, unsigned char *output) {
         ::sha256(input, ilen, output);
     }
 
