@@ -36,19 +36,16 @@ static void test_sha256_long_message(uint8_t *digest)
 static void test_sha256_message4(uint8_t *digest)
 {
     /* Message of 929271 bytes */
-
     sha256_ctx ctx;
     uint8_t message[1000];
     int i;
 
     memset(message, 'a', sizeof (message));
-
     arduino::sha256::begin(&ctx);
     for (i = 0; i < 929; i++) {
         arduino::sha256::update(&ctx, message, sizeof (message));
     }
     arduino::sha256::update(&ctx, message, 271);
-
     arduino::sha256::finalize(&ctx, digest);
 }
 
@@ -58,7 +55,6 @@ static int test(const char *vector, uint8_t *digest, uint32_t digest_size)
     int i;
 
     output[2 * digest_size] = '\0';
-
     for (i = 0; i < (int) digest_size ; i++) {
        sprintf(output + 2 * i, "%02x", digest[i]);
     }
@@ -102,4 +98,5 @@ SCENARIO( "FIPS 180-2 Validation tests" ) {
     test_sha256_long_message(digest);
     REQUIRE(test(vectors[0][4], digest, SHA256_DIGEST_SIZE) == 0);
 #endif
+   free(message3);
 }
