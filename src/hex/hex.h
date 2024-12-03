@@ -17,6 +17,9 @@ namespace arduino { namespace hex {
      * This library contains the methods to get board provisioning id
      */
 
-    String encode(uint8_t* in, uint32_t size);
+    String encode(const uint8_t* in, uint32_t size);
+    String encodeUpper(const uint8_t* in, uint32_t size);
+
+    bool decode(const String in, uint8_t* out, uint32_t size);
 
 }} // arduino::hex
