@@ -28,7 +28,7 @@
 #elif defined(ARDUINO_PORTENTA_C33)        || \
       defined(ARDUINO_NICLA_VISION)
     #include <Arduino_SecureElement.h>
-    #define CRYPTO_SN_SIZE SE05X_SN_LENGTH
+    #define CRYPTO_SN_SIZE 18
 #elif defined(ARDUINO_UNOR4_WIFI)
     #include <Arduino_SecureElement.h>
     #define CRYPTO_SN_SIZE 6
