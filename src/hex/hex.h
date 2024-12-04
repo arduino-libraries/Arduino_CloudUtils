@@ -15,7 +15,7 @@
 namespace arduino { namespace hex {
     /*
      * This library contains the methods to hex encode a buffer into a String
-     * and viceversa
+     * and vice-versa
      */
 
     String encode(const uint8_t* in, uint32_t size);
