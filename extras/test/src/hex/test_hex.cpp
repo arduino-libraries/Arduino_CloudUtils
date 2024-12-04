@@ -18,11 +18,11 @@ SCENARIO( "HEX encoding test" ) {
     for(i = 0; i <= 0xffff; ++i){
         /* encode to hex string using our implementation */
         const unsigned char org[2] = {(unsigned char)(i>>8), (unsigned char)i};
-        char hex[5];
+        char hex[5] = {0,0,0,0,0};
         chex_encode(hex, sizeof(hex), org, sizeof(org));
 
         /* decode from hex string using a function from the standard library */
-        unsigned char bin[2];
+        unsigned char bin[2] = {0,0};
         int n = sscanf(hex, "%02hhx%02hhx", bin, bin+1);
         REQUIRE(n == sizeof(bin));
 
@@ -37,7 +37,7 @@ SCENARIO( "HEX decoding test" ) {
     unsigned i;
     for(i = 0; i <= 0xffff; ++i){
         /* encode to hex string using a function from the standard library */
-        char hex[5];
+        char hex[5] = {0,0,0,0,0};
         snprintf(hex, sizeof(hex), "%02hhX%02hhx", (unsigned char)(i>>8), (unsigned char)i);
 
         /* decode from hex string using our implementation */
