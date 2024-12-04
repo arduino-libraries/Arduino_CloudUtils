@@ -14,9 +14,29 @@
 
 namespace arduino { namespace hex {
     /*
-     * This library contains the methods to get board provisioning id
+     * This library contains the methods to hex encode a buffer into a String
+     * and vice-versa
      */
 
-    String encode(uint8_t* in, uint32_t size);
+    String encode(const uint8_t* in, uint32_t size);
+    String encodeUpper(const uint8_t* in, uint32_t size);
+
+    bool decode(const String in, uint8_t* out, uint32_t size);
+
+    class THEXT {
+
+    public:
+        static inline String encode(const uint8_t* in, uint32_t size) {
+            return arduino::hex::encode(in, size);
+        }
+        static inline String encodeUpper(const uint8_t* in, uint32_t size) {
+            return arduino::hex::encodeUpper(in, size);
+        }
+
+        static inline bool decode(const String in, uint8_t* out, uint32_t size) {
+            return arduino::hex::decode(in, out, size);
+        }
+
+    };
 
 }} // arduino::hex

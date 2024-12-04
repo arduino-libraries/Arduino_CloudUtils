@@ -41,7 +41,6 @@ namespace arduino { namespace bpid {
         uint8_t out[SHA256::HASH_SIZE];
         arduino::sha256::sha256(data, sizeof(data), out);
         return arduino::hex::encode(out, sizeof(out));
-        return String("");
     }
 
 }} // arduino::bpid

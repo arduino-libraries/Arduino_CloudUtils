@@ -9,18 +9,30 @@
 */
 
 #include "hex.h"
+#include "chex.h"
 
 namespace arduino { namespace hex {
 
-    String encode(uint8_t* in, uint32_t size) {
-        String out;
-        out.reserve((size * 2) + 1);
+    String encode(const uint8_t* in, uint32_t size) {
+        char out[(size * 2) + 1];
+        unsigned int byteNumber;
+        byteNumber = chex_encode(out, sizeof(out), in, size);
+        out[byteNumber] = 0;
+        return String(out);
+    }
 
-        char *ptr = out.begin();
-        for (uint32_t i = 0; i < size; i++) {
-            ptr += sprintf(ptr, "%02X", in[i]);
-        }
-        return String(out.c_str());
+    String encodeUpper(const uint8_t* in, uint32_t size) {
+        String out = encode(in, size);
+        out.toUpperCase();
+        return out;
+    }
+
+    bool decode(const String in, uint8_t* out, uint32_t size) {
+        unsigned int byteNumber;
+        byteNumber = chex_decode(out, size, in.begin(), in.length());
+        Serial.println(byteNumber);
+        Serial.println(in.length());
+        return byteNumber * 2  == in.length();
     }
 
 }} // arduino::hex

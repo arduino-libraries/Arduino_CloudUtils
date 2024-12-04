@@ -9,6 +9,7 @@
 */
 
 #include "csn.h"
+#include "hex/hex.h"
 
 namespace arduino { namespace csn {
 
@@ -22,7 +23,7 @@ namespace arduino { namespace csn {
             return false;
         }
         SecureElement se;
-        if (!se.begin() || !se.serialNumber(in)) {
+        if (!se.begin() || !arduino::hex::decode(se.serialNumber(), in, size)) {
             return false;
         }
         return true;

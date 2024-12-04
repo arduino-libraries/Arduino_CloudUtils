@@ -24,21 +24,21 @@
       defined(ARDUINO_OPTA)                || \
       defined(ARDUINO_GIGA)
     #include <Arduino_SecureElement.h>
-    #define CRYPTO_SN_SIZE 0
+    #define CRYPTO_SN_SIZE 9
 #elif defined(ARDUINO_PORTENTA_C33)        || \
       defined(ARDUINO_NICLA_VISION)
     #include <Arduino_SecureElement.h>
-    #define CRYPTO_SN_SIZE 0
+    #define CRYPTO_SN_SIZE 18
 #elif defined(ARDUINO_UNOR4_WIFI)
     #include <Arduino_SecureElement.h>
-    #define CRYPTO_SN_SIZE 0
+    #define CRYPTO_SN_SIZE 6
 #else
     #define CRYPTO_SN_SIZE 0
 #endif
 
 namespace arduino { namespace csn {
     /*
-     * This library contains the methods to get board microcontroller id
+     * This library contains the methods to get crypto serial number
      */
 
     bool get(uint8_t *in, uint32_t size);
