@@ -10,3 +10,4 @@
 #pragma once
 
 #include "./sha256/SHA256.h"
+using namespace sha256;
