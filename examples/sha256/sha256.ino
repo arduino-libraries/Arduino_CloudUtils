@@ -9,35 +9,25 @@
 */
 
 #include <Arduino_SHA256.h>
+#include <Arduino_HEX.h>
 #include "buffer.h"
 
 void setup() {
     Serial.begin(9600);
     while(!Serial);
 
-    uint8_t sha[SHA256::HASH_SIZE];
+    uint8_t sha[SHA256_DIGEST_SIZE];
 
     SHA256 sha256;
     sha256.begin();
     sha256.update(buffer, sizeof(buffer));
     sha256.finalize(sha);
 
-    Serial.println(hexEncode(sha, sizeof(sha)));
+    Serial.println(THEXT::encode(sha, sizeof(sha)));
 
     /* One-shot */
-    arduino::sha256::sha256(buffer, sizeof(buffer), sha);
-    Serial.println(hexEncode(sha, sizeof(sha)));
-}
-
-static String hexEncode(uint8_t* in, uint32_t size) {
-  String out;
-  out.reserve((size * 2) + 1);
-
-  char* ptr = out.begin();
-  for (uint32_t i = 0; i < size; i++) {
-    ptr += sprintf(ptr, "%02X", in[i]);
-  }
-  return String(out.c_str());
+    SHA256::sha256(buffer, sizeof(buffer), sha);
+    Serial.println(THEXT::encode(sha, sizeof(sha)));
 }
 
 void loop() { }
