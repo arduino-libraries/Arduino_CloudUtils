@@ -30,8 +30,6 @@ namespace arduino { namespace hex {
     bool decode(const String in, uint8_t* out, uint32_t size) {
         unsigned int byteNumber;
         byteNumber = chex_decode(out, size, in.begin(), in.length());
-        Serial.println(byteNumber);
-        Serial.println(in.length());
         return byteNumber * 2  == in.length();
     }
 
