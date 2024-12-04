@@ -15,7 +15,7 @@ void setup() {
     Serial.begin(9600);
     while(!Serial);
 
-    uint8_t sha[SHA256::HASH_SIZE];
+    uint8_t sha[SHA256_DIGEST_SIZE];
 
     SHA256 sha256;
     sha256.begin();
