@@ -26,13 +26,14 @@ set(TEST_SRCS
   src/crc32/test_crc32.cpp
   src/crc16/test_crc16.cpp
   src/sha256/test_sha256.cpp
+  src/hex/test_hex.cpp
 )
 
 set(TEST_DUT_SRCS
   ../../src/crc/crc32.cpp
   ../../src/crc/crc16.cpp
-  ../../src/sha256/SHA256.cpp
   ../../src/sha256/sha2.c
+  ../../src/hex/chex.h
 )
 
 ##########################################################################
