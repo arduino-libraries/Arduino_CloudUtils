@@ -30,6 +30,8 @@ namespace arduino { namespace sha256 {
     class SHA256 {
     public:
 
+        static constexpr uint32_t HASH_SIZE = SHA256_DIGEST_SIZE;
+
         inline void begin() {
             return arduino::sha256::begin(&_ctx);
         }
