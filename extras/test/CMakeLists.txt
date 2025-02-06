@@ -20,6 +20,7 @@ set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 include_directories(../../src)
+include_directories(src/arduino)
 
 set(TEST_SRCS
   src/lzss/test_decoder.cpp
@@ -27,6 +28,7 @@ set(TEST_SRCS
   src/crc16/test_crc16.cpp
   src/sha256/test_sha256.cpp
   src/hex/test_hex.cpp
+  src/time/test_TimedAttempt.cpp
 )
 
 set(TEST_DUT_SRCS
@@ -34,6 +36,11 @@ set(TEST_DUT_SRCS
   ../../src/crc/crc16.cpp
   ../../src/sha256/sha2.c
   ../../src/hex/chex.h
+  ../../src/time/TimedAttempt.cpp
+)
+
+set(TEST_STUB_SRCS
+  src/arduino/Arduino.cpp
 )
 
 ##########################################################################
@@ -45,7 +52,7 @@ add_compile_options(-Wno-cast-function-type)
 set(CMAKE_C_FLAGS   ${CMAKE_C_FLAGS}   "--coverage")
 set(CMAKE_CXX_FLAGS ${CMAKE_CXX_FLAGS} "--coverage -Wno-deprecated-copy")
 
-add_executable( ${TEST_TARGET} ${TEST_SRCS} ${TEST_DUT_SRCS} )
+add_executable( ${TEST_TARGET} ${TEST_SRCS} ${TEST_DUT_SRCS} ${TEST_STUB_SRCS})
 target_compile_definitions( ${TEST_TARGET} PUBLIC SOURCE_DIR="${CMAKE_SOURCE_DIR}" )
 
 target_link_libraries( ${TEST_TARGET} Catch2WithMain )
