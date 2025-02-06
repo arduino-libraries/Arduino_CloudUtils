@@ -26,6 +26,8 @@ jobs:
         - examples/crc32
         - examples/crc16
         - examples/sha256
+        - examples/customCborDecoder
+        - examples/customCborEncoder
       SKETCHES_REPORTS_PATH: sketches-reports
 
     strategy:
