@@ -49,7 +49,8 @@ namespace arduino { namespace time {
     unsigned long TimedAttempt::reload() {
         unsigned long shift = _retryCount > 31 ? 31 : _retryCount;
         unsigned long delay = (1UL << shift) * _minDelay;
-        _retryDelay = min(delay, _maxDelay);
+        /* delay should always increase */
+        _retryDelay =  (delay > _retryDelay) ? min(delay, _maxDelay): _maxDelay;
         _retryTick = millis();
         return _retryDelay;
     }
