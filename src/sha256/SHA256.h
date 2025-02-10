@@ -14,17 +14,17 @@
 
 namespace arduino { namespace sha256 {
 
-    inline void begin(sha256_ctx * ctx) {
-        return sha256_init(ctx);
+    inline void begin(acu_sha256_ctx * ctx) {
+        return acu_sha256_init(ctx);
     }
-    inline void update(sha256_ctx *ctx, const uint8_t *input, uint32_t length) {
-        return sha256_update(ctx, input, length);
+    inline void update(acu_sha256_ctx *ctx, const uint8_t *input, uint32_t length) {
+        return acu_sha256_update(ctx, input, length);
     }
-    inline void finalize(sha256_ctx * ctx, uint8_t digest[SHA256_DIGEST_SIZE]) {
-        return sha256_final(ctx, digest);
+    inline void finalize(acu_sha256_ctx * ctx, uint8_t digest[SHA256_DIGEST_SIZE]) {
+        return acu_sha256_final(ctx, digest);
     }
     inline void sha256(const unsigned char *input, unsigned int ilen, unsigned char *output) {
-        ::sha256(input, ilen, output);
+        ::acu_sha256(input, ilen, output);
     }
 
     class SHA256 {
@@ -47,7 +47,7 @@ namespace arduino { namespace sha256 {
 
     private:
 
-        sha256_ctx _ctx;
+        acu_sha256_ctx _ctx;
     };
 
 }} // arduino::sha256

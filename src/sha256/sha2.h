@@ -37,8 +37,13 @@
 #include <stddef.h>
 #include <string.h>
 
-#define SHA256_DIGEST_SIZE ( 256 / 8)
-#define SHA256_BLOCK_SIZE  ( 512 / 8)
+#ifndef SHA256_DIGEST_SIZE
+    #define SHA256_DIGEST_SIZE ( 256 / 8)
+#endif // SHA256_DIGEST_SIZE
+
+#ifndef SHA256_BLOCK_SIZE
+    #define SHA256_BLOCK_SIZE  ( 512 / 8)
+#endif // SHA256_BLOCK_SIZE
 
 #ifdef __cplusplus
 extern "C" {
@@ -49,12 +54,12 @@ typedef struct {
     uint64_t len;
     uint8_t block[2 * SHA256_BLOCK_SIZE];
     uint32_t h[8];
-} sha256_ctx;
+} acu_sha256_ctx;
 
-void sha256_init(sha256_ctx * ctx);
-void sha256_update(sha256_ctx *ctx, const uint8_t *message, uint64_t len);
-void sha256_final(sha256_ctx *ctx, uint8_t *digest);
-void sha256(const uint8_t *message, uint64_t len, uint8_t *digest);
+void acu_sha256_init(acu_sha256_ctx * ctx);
+void acu_sha256_update(acu_sha256_ctx *ctx, const uint8_t *message, uint64_t len);
+void acu_sha256_final(acu_sha256_ctx *ctx, uint8_t *digest);
+void acu_sha256(const uint8_t *message, uint64_t len, uint8_t *digest);
 
 #ifdef __cplusplus
 }
