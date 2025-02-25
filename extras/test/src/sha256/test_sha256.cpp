@@ -19,7 +19,7 @@
 #ifdef TEST_VECTORS_LONG
 static void test_sha256_long_message(uint8_t *digest)
 {
-    sha256_ctx ctx;
+    acu_sha256_ctx ctx;
     uint8_t message[1000];
     int i;
 
@@ -36,7 +36,7 @@ static void test_sha256_long_message(uint8_t *digest)
 static void test_sha256_message4(uint8_t *digest)
 {
     /* Message of 929271 bytes */
-    sha256_ctx ctx;
+    acu_sha256_ctx ctx;
     uint8_t message[1000];
     int i;
 

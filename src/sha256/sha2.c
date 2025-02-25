@@ -128,7 +128,7 @@ static const uint32_t sha256_k[64] =
 
 /* SHA-2 internal function */
 
-static void sha256_transf(sha256_ctx *ctx, const uint8_t *message,
+static void sha256_transf(acu_sha256_ctx *ctx, const uint8_t *message,
     uint64_t block_nb)
 {
     uint32_t w[64];
@@ -245,16 +245,16 @@ static void sha256_transf(sha256_ctx *ctx, const uint8_t *message,
 
 /* SHA-256 functions */
 
-void sha256(const uint8_t *message, uint64_t len, uint8_t *digest)
+void acu_sha256(const uint8_t *message, uint64_t len, uint8_t *digest)
 {
-    sha256_ctx ctx;
+    acu_sha256_ctx ctx;
 
-    sha256_init(&ctx);
-    sha256_update(&ctx, message, len);
-    sha256_final(&ctx, digest);
+    acu_sha256_init(&ctx);
+    acu_sha256_update(&ctx, message, len);
+    acu_sha256_final(&ctx, digest);
 }
 
-void sha256_init(sha256_ctx *ctx)
+void acu_sha256_init(acu_sha256_ctx *ctx)
 {
 #ifndef UNROLL_LOOPS
     int i;
@@ -272,7 +272,7 @@ void sha256_init(sha256_ctx *ctx)
     ctx->tot_len = 0;
 }
 
-void sha256_update(sha256_ctx *ctx, const uint8_t *message, uint64_t len)
+void acu_sha256_update(acu_sha256_ctx *ctx, const uint8_t *message, uint64_t len)
 {
     uint64_t block_nb;
     uint64_t new_len, rem_len, tmp_len;
@@ -304,7 +304,7 @@ void sha256_update(sha256_ctx *ctx, const uint8_t *message, uint64_t len)
     ctx->tot_len += (block_nb + 1) << 6;
 }
 
-void sha256_final(sha256_ctx *ctx, uint8_t *digest)
+void acu_sha256_final(acu_sha256_ctx *ctx, uint8_t *digest)
 {
     uint64_t block_nb;
     uint64_t pm_len;
