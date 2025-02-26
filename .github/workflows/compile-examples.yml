@@ -28,6 +28,7 @@ jobs:
         - examples/sha256
         - examples/customCborDecoder
         - examples/customCborEncoder
+        - examples/timedBlink
       SKETCHES_REPORTS_PATH: sketches-reports
 
     strategy:
