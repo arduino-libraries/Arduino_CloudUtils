@@ -28,6 +28,8 @@ set(TEST_SRCS
   src/crc16/test_crc16.cpp
   src/sha256/test_sha256.cpp
   src/hex/test_hex.cpp
+  src/cbor/test_cbor_encoder.cpp
+  src/cbor/test_cbor_decoder.cpp
   src/time/test_TimedAttempt.cpp
 )
 
@@ -36,6 +38,19 @@ set(TEST_DUT_SRCS
   ../../src/crc/crc16.cpp
   ../../src/sha256/sha2.c
   ../../src/hex/chex.h
+  ../../src/cbor/MessageDecoder.cpp
+  ../../src/cbor/MessageEncoder.cpp
+  ../../src/cbor/tinycbor
+  ../../src/cbor/tinycbor/src/cborencoder.c
+  ../../src/cbor/tinycbor/src/cborencoder_close_container_checked.c
+  ../../src/cbor/tinycbor/src/cborerrorstrings.c
+  ../../src/cbor/tinycbor/src/cborparser.c
+  ../../src/cbor/tinycbor/src/cborparser_dup_string.c
+  ../../src/cbor/tinycbor/src/cborpretty.c
+  ../../src/cbor/tinycbor/src/cborpretty_stdio.c
+  ../../src/cbor/tinycbor/src/cbortojson.c
+  ../../src/cbor/tinycbor/src/cborvalidation.c
+  ../../src/cbor/tinycbor/src/open_memstream.c
   ../../src/time/TimedAttempt.cpp
 )
 

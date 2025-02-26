@@ -9,4 +9,5 @@
 */
 #pragma once
 
-#include "./cbor/tinycbor/cbor-lib.h"
+#include "./cbor/MessageEncoder.h"
+#include "./cbor/MessageDecoder.h"
