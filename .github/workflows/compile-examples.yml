@@ -26,6 +26,7 @@ jobs:
         - examples/crc32
         - examples/crc16
         - examples/sha256
+        - examples/timedBlink
       SKETCHES_REPORTS_PATH: sketches-reports
 
     strategy:
