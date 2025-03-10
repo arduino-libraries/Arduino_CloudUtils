@@ -31,21 +31,21 @@ MessageDecoder::Status CBORMessageDecoderSingleton::decode(Message* msg, const u
     return MessageDecoder::Status::Error;
   }
 
-  auto decoder_it = decoders.begin();
+  struct llnode* decoder_it = decoders;
 
-  for(; decoder_it != decoders.end(); decoder_it++) {
-    if(decoder_it->first == tag) {
+  for(; decoder_it != nullptr; decoder_it = decoder_it->next) {
+    if(decoder_it->tag == tag) {
       break;
     }
   }
 
   // check if message.id exists on the decoders list or return error
-  if(decoder_it == decoders.end()) {
+  if(decoder_it == nullptr) {
     return MessageDecoder::Status::Error;
   }
 
   // encode the message
-  if(decoder_it->second->_decode(&iter, msg) == MessageDecoder::Status::Error) {
+  if(decoder_it->decoder->_decode(&iter, msg) == MessageDecoder::Status::Error) {
     return MessageDecoder::Status::Error;
   }
 
@@ -59,17 +59,27 @@ CBORMessageDecoderSingleton& CBORMessageDecoderSingleton::getInstance() {
 }
 
 void CBORMessageDecoderSingleton::append(CBORTag tag, CBORMessageDecoderInterface* decoder) {
-    auto decoder_it = decoders.begin();
+  struct llnode* decoder_it = decoders;
 
-  for(; decoder_it != decoders.end(); decoder_it++) {
-    if(decoder_it->first == tag) {
+  for(; decoder_it != nullptr; decoder_it = decoder_it->next) {
+    if(decoder_it->tag == tag) {
       return;
     }
   }
 
-  decoders.push_back(
-    std::make_pair(tag, decoder)
-  );
+  struct llnode* next = new llnode;
+
+  next->tag = tag;
+  next->decoder = decoder;
+
+  // this is the first element
+  if(decoders == nullptr) {
+    decoders = next;
+  } else {
+    decoders_last->next = next;
+  }
+
+  decoders_last = next;
 }
 
 CBORMessageDecoderInterface::CBORMessageDecoderInterface(const CBORTag tag, const MessageId id)
