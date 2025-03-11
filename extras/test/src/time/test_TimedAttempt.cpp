@@ -14,7 +14,7 @@
 #include <Arduino.h>
 #include <limits.h>
 
-using namespace arduino::time;
+using namespace arduino::tattempt;
 
 SCENARIO("Test broker connection retries") {
   TimedAttempt _connection_attempt(0,0);

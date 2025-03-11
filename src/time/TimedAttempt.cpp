@@ -12,7 +12,7 @@
 #include <Arduino.h>
 #include "TimedAttempt.h"
 
-namespace arduino { namespace time {
+namespace arduino { namespace tattempt {
 
     TimedAttempt::TimedAttempt(unsigned long minDelay, unsigned long maxDelay)
     : _minDelay(minDelay)
@@ -75,4 +75,4 @@ namespace arduino { namespace time {
         return _retryDelay;
     }
 
-}}  // arduino::time
+}}  // arduino::tattempt
