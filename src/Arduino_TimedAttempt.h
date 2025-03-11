@@ -11,4 +11,4 @@
 
 #include "./time/TimedAttempt.h"
 
-using namespace arduino::time;
+using namespace arduino::tattempt;

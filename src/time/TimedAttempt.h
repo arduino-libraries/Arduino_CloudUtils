@@ -10,7 +10,7 @@
 
 #pragma once
 
-namespace arduino { namespace time {
+namespace arduino { namespace tattempt {
 
     /**
      * The TimedAttempt class manages retry attempts with configurable delays.
@@ -97,4 +97,4 @@ namespace arduino { namespace time {
         unsigned int _retryCount;
     };
 
-}}  // arduino::time
+}}  // arduino::tattempt
