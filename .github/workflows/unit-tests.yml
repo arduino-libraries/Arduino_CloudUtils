@@ -41,7 +41,7 @@ jobs:
             # In order to avoid uploads of data from forks, only use the token for runs in the parent repo.
             # Token is intentionally exposed.
             # See: https://community.codecov.com/t/upload-issues-unable-to-locate-build-via-github-actions-api/3954
-            CODECOV_TOKEN="47827969-3fda-4ba1-9506-e8d0834ed88c"
+            CODECOV_TOKEN="bf6a7f2a-362b-43a8-ac34-c0fd5ef11d6a"
           else
             # codecov/codecov-action does unauthenticated upload if empty string is passed via the `token` input.
             CODECOV_TOKEN=""
