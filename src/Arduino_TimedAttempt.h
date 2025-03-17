@@ -10,5 +10,3 @@
 #pragma once
 
 #include "./time/TimedAttempt.h"
-
-using namespace arduino::tattempt;

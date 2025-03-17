@@ -10,5 +10,3 @@
 #pragma once
 
 #include "./sha256/SHA256.h"
-using namespace arduino;
-using namespace sha256;

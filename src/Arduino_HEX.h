@@ -10,5 +10,5 @@
 #pragma once
 
 #include "./hex/hex.h"
+
 using namespace arduino;
-using namespace hex;
