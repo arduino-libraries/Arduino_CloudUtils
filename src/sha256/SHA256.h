@@ -27,27 +27,27 @@ namespace arduino { namespace sha256 {
         ::acu_sha256(input, ilen, output);
     }
 
-    class SHA256 {
-    public:
-
-        static constexpr uint32_t HASH_SIZE = SHA256_DIGEST_SIZE;
-
-        inline void begin() {
-            return arduino::sha256::begin(&_ctx);
-        }
-        inline void update(uint8_t const * data, uint32_t const len) {
-            return arduino::sha256::update(&_ctx, data, len);
-        }
-        inline void finalize(uint8_t * hash) {
-            return arduino::sha256::finalize(&_ctx, hash);
-        }
-        static inline void sha256(uint8_t const * data, uint32_t const len, uint8_t * hash) {
-            return arduino::sha256::sha256(data, len, hash);
-        }
-
-    private:
-
-        acu_sha256_ctx _ctx;
-    };
-
 }} // arduino::sha256
+
+class SHA256 {
+public:
+
+    static constexpr uint32_t HASH_SIZE = SHA256_DIGEST_SIZE;
+
+    inline void begin() {
+        return arduino::sha256::begin(&_ctx);
+    }
+    inline void update(uint8_t const * data, uint32_t const len) {
+        return arduino::sha256::update(&_ctx, data, len);
+    }
+    inline void finalize(uint8_t * hash) {
+        return arduino::sha256::finalize(&_ctx, hash);
+    }
+    static inline void sha256(uint8_t const * data, uint32_t const len, uint8_t * hash) {
+        return arduino::sha256::sha256(data, len, hash);
+    }
+
+private:
+
+    acu_sha256_ctx _ctx;
+};

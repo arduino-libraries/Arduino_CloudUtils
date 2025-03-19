@@ -12,67 +12,63 @@
 #include <Arduino.h>
 #include "TimedAttempt.h"
 
-namespace arduino { namespace tattempt {
+TimedAttempt::TimedAttempt(unsigned long minDelay, unsigned long maxDelay)
+: _minDelay(minDelay)
+, _maxDelay(maxDelay) {
+}
 
-    TimedAttempt::TimedAttempt(unsigned long minDelay, unsigned long maxDelay)
-    : _minDelay(minDelay)
-    , _maxDelay(maxDelay) {
-    }
+void TimedAttempt::begin(unsigned long delay) {
+    _retryCount = 0;
+    _retryDelay = 0;
+    _retryTick = 0;
+    _minDelay = delay;
+    _maxDelay = delay;
+}
 
-    void TimedAttempt::begin(unsigned long delay) {
-        _retryCount = 0;
-        _retryDelay = 0;
-        _retryTick = 0;
-        _minDelay = delay;
-        _maxDelay = delay;
-    }
+void TimedAttempt::begin(unsigned long minDelay, unsigned long maxDelay) {
+    _retryCount = 0;
+    _retryDelay = 0;
+    _retryTick = 0;
+    _minDelay = minDelay;
+    _maxDelay = maxDelay;
+}
 
-    void TimedAttempt::begin(unsigned long minDelay, unsigned long maxDelay) {
-        _retryCount = 0;
-        _retryDelay = 0;
-        _retryTick = 0;
-        _minDelay = minDelay;
-        _maxDelay = maxDelay;
-    }
+unsigned long TimedAttempt::reconfigure(unsigned long minDelay, unsigned long maxDelay) {
+    _minDelay = minDelay;
+    _maxDelay = maxDelay;
+    return reload();
+}
 
-    unsigned long TimedAttempt::reconfigure(unsigned long minDelay, unsigned long maxDelay) {
-        _minDelay = minDelay;
-        _maxDelay = maxDelay;
-        return reload();
-    }
+unsigned long TimedAttempt::retry() {
+    _retryCount++;
+    return reload();
+}
 
-    unsigned long TimedAttempt::retry() {
-        _retryCount++;
-        return reload();
-    }
+unsigned long TimedAttempt::reload() {
+    unsigned long shift = _retryCount > 31 ? 31 : _retryCount;
+    unsigned long delay = (1UL << shift) * _minDelay;
+    /* delay should always increase */
+    _retryDelay =  (delay > _retryDelay) ? min(delay, _maxDelay): _maxDelay;
+    _retryTick = millis();
+    return _retryDelay;
+}
 
-    unsigned long TimedAttempt::reload() {
-        unsigned long shift = _retryCount > 31 ? 31 : _retryCount;
-        unsigned long delay = (1UL << shift) * _minDelay;
-        /* delay should always increase */
-        _retryDelay =  (delay > _retryDelay) ? min(delay, _maxDelay): _maxDelay;
-        _retryTick = millis();
-        return _retryDelay;
-    }
+void TimedAttempt::reset() {
+    _retryCount = 0;
+}
 
-    void TimedAttempt::reset() {
-        _retryCount = 0;
-    }
+bool TimedAttempt::isRetry() {
+    return _retryCount > 0;
+}
 
-    bool TimedAttempt::isRetry() {
-        return _retryCount > 0;
-    }
+bool TimedAttempt::isExpired() {
+    return millis() - _retryTick > _retryDelay;
+}
 
-    bool TimedAttempt::isExpired() {
-        return millis() - _retryTick > _retryDelay;
-    }
+unsigned int TimedAttempt::getRetryCount() {
+    return _retryCount;
+}
 
-    unsigned int TimedAttempt::getRetryCount() {
-        return _retryCount;
-    }
-
-    unsigned int TimedAttempt::getWaitTime() {
-        return _retryDelay;
-    }
-
-}}  // arduino::tattempt
+unsigned int TimedAttempt::getWaitTime() {
+    return _retryDelay;
+}
