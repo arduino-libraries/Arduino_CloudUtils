@@ -28,9 +28,13 @@ namespace arduino { namespace hex {
     }
 
     bool decode(const String in, uint8_t* out, uint32_t size) {
+        return decode(in.c_str(), out, size);
+    }
+
+    bool decode(const char *in, uint8_t* out, uint32_t size) {
         unsigned int byteNumber;
-        byteNumber = chex_decode(out, size, in.begin(), in.length());
-        return byteNumber * 2  == in.length();
+        byteNumber = chex_decode(out, size, in, strlen(in));
+        return byteNumber * 2  == strlen(in);
     }
 
 }} // arduino::hex

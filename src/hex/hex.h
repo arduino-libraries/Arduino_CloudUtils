@@ -20,7 +20,7 @@ namespace arduino { namespace hex {
 
     String encode(const uint8_t* in, uint32_t size);
     String encodeUpper(const uint8_t* in, uint32_t size);
-
+    bool decode(const char *in, uint8_t* out, uint32_t size);
     bool decode(const String in, uint8_t* out, uint32_t size);
 }} // arduino::hex
 
@@ -37,4 +37,7 @@ public:
         return arduino::hex::decode(in, out, size);
     }
 
+    static inline bool decode(const char *in, uint8_t* out, uint32_t size) {
+        return arduino::hex::decode(in, out, size);
+    }
 };
