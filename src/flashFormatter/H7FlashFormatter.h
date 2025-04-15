@@ -6,7 +6,7 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #pragma once
-#include "FlashFormatterInterface.h"
+#include "FlashFormatterBase.h"
 #include "QSPIFBlockDevice.h"
 #include "MBRBlockDevice.h"
 #include "LittleFileSystem.h"
