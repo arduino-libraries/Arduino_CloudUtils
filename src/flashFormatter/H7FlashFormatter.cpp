@@ -12,18 +12,18 @@
 #include "certificates.h"
 
 MBEDH7FlashFormatter::MBEDH7FlashFormatter():
-_root(QSPI_SO0, QSPI_SO1, QSPI_SO2, QSPI_SO3,  QSPI_SCK, QSPI_CS, QSPIF_POLARITY_MODE_1, 40000000),
-_wifi_data(&_root, 1),
+_root(mbed::BlockDevice::get_default_instance()),
+_wifi_data(_root, 1),
 _wifi_data_fs("wlan"),
-_ota_data(&_root, 2),
+_ota_data(_root, 2),
 _ota_data_fs("fs"),
-_kvstore_data(&_root, 3)
+_kvstore_data(_root, 3)
 {
 }
 
 bool MBEDH7FlashFormatter::checkPartition()
 {
-    if (_root.init() != QSPIF_BD_ERROR_OK)
+    if (_root->init() != mbed::BD_ERROR_OK)
     {
         return false;
     }
@@ -33,7 +33,7 @@ bool MBEDH7FlashFormatter::checkPartition()
         return false;
     }
 
-    if (_ota_data.init() != QSPIF_BD_ERROR_OK || _ota_data_fs.mount(&_ota_data) != 0)
+    if (_ota_data.init() !=  mbed::BD_ERROR_OK || _ota_data_fs.mount(&_ota_data) != 0)
     {
         return false;
     }
@@ -45,22 +45,22 @@ bool MBEDH7FlashFormatter::checkPartition()
     _ota_data_fs.unmount();
     _ota_data.deinit();
 
-    if (_kvstore_data.init() != QSPIF_BD_ERROR_OK)
+    if (_kvstore_data.init() !=  mbed::BD_ERROR_OK)
     {
         return false;
     }
 
     _kvstore_data.deinit();
-    _root.deinit();
+    _root->deinit();
 
     return true;
 }
 
 bool MBEDH7FlashFormatter::formatPartition() {
-  _root.erase(0x0, _root.get_erase_size());
-  mbed::MBRBlockDevice::partition(&_root, 1, 0x0B, 0, 1024 * 1024);
-  mbed::MBRBlockDevice::partition(&_root, 2, 0x0B, 1024 * 1024, 13 * 1024 * 1024);
-  mbed::MBRBlockDevice::partition(&_root, 3, 0x0B, 13 * 1024 * 1024, 14 * 1024 * 1024);
+  _root->erase(0x0, _root->get_erase_size());
+  mbed::MBRBlockDevice::partition(_root, 1, 0x0B, 0, 1024 * 1024);
+  mbed::MBRBlockDevice::partition(_root, 2, 0x0B, 1024 * 1024, 13 * 1024 * 1024);
+  mbed::MBRBlockDevice::partition(_root, 3, 0x0B, 13 * 1024 * 1024, 14 * 1024 * 1024);
 
   if(_ota_data_fs.mount(&_ota_data) != 0) {
     if(_ota_data_fs.reformat(&_ota_data) != 0) {
@@ -73,7 +73,7 @@ bool MBEDH7FlashFormatter::formatPartition() {
   if(!formatWifiPartition()) {
     return false;
   }
-  _root.deinit();
+  _root->deinit();
   return true;
 }
 
@@ -139,7 +139,7 @@ bool MBEDH7FlashFormatter::formatWifiPartition() {
   while (byte_count < file_size) {
     if(byte_count + chunck_size > file_size)
       chunck_size = file_size - byte_count;
-    int ret = _root.program(wifi_firmware_image_data, offset + byte_count, chunck_size);
+    int ret = _root->program(wifi_firmware_image_data, offset + byte_count, chunck_size);
     if (ret != 0) {
       return false;
     }

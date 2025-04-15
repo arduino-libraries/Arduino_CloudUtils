@@ -18,6 +18,8 @@ void setup() {
 
   if(!flashFormatter.checkandFormatPartition()){
     Serial.println("Failed to format partition");
+  } else {
+    Serial.println("Partition formatted successfully");
   }
 }
 

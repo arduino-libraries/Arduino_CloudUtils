@@ -7,7 +7,7 @@
 */
 #pragma once
 #include "FlashFormatterBase.h"
-#include "QSPIFBlockDevice.h"
+#include <BlockDevice.h>
 #include "MBRBlockDevice.h"
 #include "LittleFileSystem.h"
 #include "FATFileSystem.h"
@@ -20,7 +20,7 @@ protected:
   bool checkPartition() override;
   bool formatPartition() override;
 private:
-  QSPIFBlockDevice _root;
+  mbed::BlockDevice* _root;
   mbed::MBRBlockDevice _wifi_data;
   mbed::FATFileSystem _wifi_data_fs;
   mbed::MBRBlockDevice _ota_data;
