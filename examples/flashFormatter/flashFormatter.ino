@@ -33,7 +33,7 @@ void setup() {
   Serial.println("Do you want to proceed? Y/[n]");
 
   if (true == waitResponse()) {
-    if(!flashFormatter.checkandFormatPartition()){
+    if(!flashFormatter.checkAndFormatPartition()){
       Serial.println("Failed to check / format flash");
     } else {
       Serial.println("Flash checked / formatted successfully");
