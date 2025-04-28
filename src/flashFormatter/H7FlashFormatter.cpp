@@ -58,9 +58,19 @@ bool MBEDH7FlashFormatter::checkPartition()
 
 bool MBEDH7FlashFormatter::formatPartition() {
   _root->erase(0x0, _root->get_erase_size());
+  /* Default partitioning of OPTA boards includes a 4th partition for PLC ide runtime
+   * This partition is not used in the context of ArduinoCloud and is not needed,
+   * but we try to preserve the default partitioning for compatibility.
+   */
+#if defined(ARDUINO_OPTA)
+  mbed::MBRBlockDevice::partition(_root, 1, 0x0B, 0, 1024 * 1024);
+  mbed::MBRBlockDevice::partition(_root, 2, 0x0B, 1024 * 1024, 6 * 1024 * 1024);
+  mbed::MBRBlockDevice::partition(_root, 3, 0x0B, 6 * 1024 * 1024, 7 * 1024 * 1024);
+#else
   mbed::MBRBlockDevice::partition(_root, 1, 0x0B, 0, 1024 * 1024);
   mbed::MBRBlockDevice::partition(_root, 2, 0x0B, 1024 * 1024, 13 * 1024 * 1024);
   mbed::MBRBlockDevice::partition(_root, 3, 0x0B, 13 * 1024 * 1024, 14 * 1024 * 1024);
+#endif
 
   if(_ota_data_fs.mount(&_ota_data) != 0) {
     if(_ota_data_fs.reformat(&_ota_data) != 0) {
