@@ -19,6 +19,8 @@ protected:
   bool checkPartition() override;
   bool formatPartition() override;
 private:
+  bool checkCACertificatesPartition();
+  bool flashCACertificates();
   BlockDevice* _root;
   MBRBlockDevice _sys_bd;
   MBRBlockDevice _user_bd;
