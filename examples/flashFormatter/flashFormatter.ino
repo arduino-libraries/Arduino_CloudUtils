@@ -16,11 +16,59 @@ void setup() {
   Serial.begin(9600);
   while(!Serial);
 
-  if(!flashFormatter.checkandFormatPartition()){
-    Serial.println("Failed to format partition");
-  } else {
-    Serial.println("Partition formatted successfully");
+  /* WARNING! Running this sketch all the content of the QSPI flash may be erased.
+   * The sketch will check if the QSPI flash is formatted with an ArduinoCloud
+   * compatible partitioning. Otherwise, it will format the QSPI flash with the
+   * default scheme.
+   *
+   * If you want to keep the content of the QSPI flash, do not run this sketch.
+   *
+   * ArduinoCloud compatible partitioning consist of:
+   * - 1st partition: WiFi firmware and certificates
+   * - 2nd partition: OTA data. Minimum size 5MB.
+   * - 3rd partition: Key Value Store data. Minimum size 1MB.
+   */
+
+  Serial.println("\nWARNING! Running this sketch all the content of the QSPI flash may be erased.");
+  Serial.println("Do you want to proceed? Y/[n]");
+
+  if (true == waitResponse()) {
+    if(!flashFormatter.checkAndFormatPartition()){
+      Serial.println("Failed to check / format flash");
+    } else {
+      Serial.println("Flash checked / formatted successfully");
+    }
   }
+  else {
+    Serial.println("Operation canceled");
+  }
+
+  Serial.println("It's now safe to reboot or disconnect your board.");
 }
 
 void loop() { }
+
+bool waitResponse() {
+  bool confirmation = false;
+  bool proceed = false;
+  while (confirmation == false) {
+    if (Serial.available()) {
+      char choice = Serial.read();
+      switch (choice) {
+        case 'y':
+        case 'Y':
+          confirmation = true;
+          proceed = true;
+          break;
+        case 'n':
+        case 'N':
+          confirmation = true;
+          proceed = false;
+          break;
+        default:
+          continue;
+      }
+    }
+  }
+  return proceed;
+}

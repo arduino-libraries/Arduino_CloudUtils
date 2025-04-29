@@ -11,7 +11,7 @@
 class FlashFormatterClass {
 public:
   virtual ~FlashFormatterClass() = default;
-  virtual bool checkandFormatPartition() {
+  virtual bool checkAndFormatPartition() {
     if(checkPartition()){
       return true;
     }
