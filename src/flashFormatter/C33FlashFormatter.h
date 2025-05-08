@@ -12,7 +12,7 @@
 #include "LittleFileSystem.h"
 #include "FATFileSystem.h"
 
-class C33FlashFormatter : public FlashFormatterClass {
+class C33FlashFormatter : public FlashFormatterBase {
 public:
   C33FlashFormatter();
 protected:
