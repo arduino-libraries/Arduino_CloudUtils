@@ -12,7 +12,7 @@
 #include "LittleFileSystem.h"
 #include "FATFileSystem.h"
 
-class MBEDH7FlashFormatter : public FlashFormatterClass {
+class MBEDH7FlashFormatter : public FlashFormatterBase {
 public:
   MBEDH7FlashFormatter();
 
