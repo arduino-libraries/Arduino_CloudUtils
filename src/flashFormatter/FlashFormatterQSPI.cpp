@@ -51,6 +51,10 @@ bool FlashFormatterQSPI::checkPartition()
     return false;
   }
 
+  if (_kvstoreData.size() < 1 * 1024 * 1024) {
+    return false;
+  }
+
   _kvstoreData.deinit();
   _root->deinit();
   return true;
