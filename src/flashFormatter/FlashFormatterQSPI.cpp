@@ -36,6 +36,7 @@ bool FlashFormatterQSPI::checkPartition()
   if (!checkWiFiData()) {
     return false;
   }
+  Serial.println("WiFi partition size: " + String((unsigned int)_wifiData.size()));
 
   _wifiFS.unmount();
   _wifiData.deinit();
@@ -60,13 +61,16 @@ bool FlashFormatterQSPI::checkPartition()
   if (_kvstoreData.size() < 1 * 1024 * 1024) {
     return false;
   }
+  Serial.println("KVStore partition size: " + String((unsigned int)_kvstoreData.size()));
   _kvstoreData.deinit();
 
   /* check PLC runtime partition */
   if (_runtimeData.init() !=  BD_ERROR_OK) {
+    Serial.println("Failed to init optData");
     _runtimeFormat = true;
     return false;
   }
+  Serial.println("Runtime partition size: " + String((unsigned int)_runtimeData.size()));
   _runtimeData.deinit();
 
   _root->deinit();
@@ -76,25 +80,30 @@ bool FlashFormatterQSPI::checkPartition()
 bool FlashFormatterQSPI::formatPartition() {
 
   if (_root->init() != BD_ERROR_OK) {
+    Serial.println("Failed to init root");
     return false;
   }
 
   if (_root->erase(0x0, _root->get_erase_size()) != BD_ERROR_OK) {
+    Serial.println("Failed to erase root");
     return false;
   }
 
   MBRBlockDevice::partition(_root, 1, 0x0B, 0, 1 * 1024 * 1024);
   if (_wifiFS.reformat(&_wifiData) != 0) {
+    Serial.println("Failed to format wifiFS");
     return false;
   }
 
   if (!restoreWifiData()) {
+    Serial.println("Failed to restore wifi data");
     return false;
   }
   _wifiFS.unmount();
 
   MBRBlockDevice::partition(_root, 2, 0x0B, 1 * 1024 * 1024, 6 * 1024 * 1024);
   if (_otaFS.reformat(&_otaData) != 0) {
+    Serial.println("Failed to format otaFS");
     return false;
   }
   _otaFS.unmount();
@@ -104,6 +113,7 @@ bool FlashFormatterQSPI::formatPartition() {
   if (_runtimeFormat) {
     MBRBlockDevice::partition(_root, 4, 0x0B, 7 * 1024 * 1024, 14 * 1024 * 1024);
     if (_runtimeFS.reformat(&_runtimeData) != 0) {
+      Serial.println("Failed to format optFS");
       return false;
     }
     _runtimeFS.unmount();
