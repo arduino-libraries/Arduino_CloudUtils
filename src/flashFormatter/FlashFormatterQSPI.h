@@ -36,5 +36,8 @@ private:
   MBRBlockDevice _otaData;
   FATFileSystem _otaFS;
   MBRBlockDevice _kvstoreData;
+  MBRBlockDevice _runtimeData;
+  FATFileSystem _runtimeFS;
+  bool _runtimeFormat;
 };
 

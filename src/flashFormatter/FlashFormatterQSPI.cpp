@@ -15,7 +15,10 @@ _wifiData(_root, 1),
 _wifiFS("wlan"),
 _otaData(_root, 2),
 _otaFS("fs"),
-_kvstoreData(_root, 3)
+_kvstoreData(_root, 3),
+_runtimeData(_root, 4),
+_runtimeFS("opt"),
+_runtimeFormat(false)
 {
 }
 
@@ -25,6 +28,7 @@ bool FlashFormatterQSPI::checkPartition()
     return false;
   }
 
+  /* check WiFi partition */
   if (_wifiData.init() !=  BD_ERROR_OK || _wifiFS.mount(&_wifiData) != 0) {
     return false;
   }
@@ -36,6 +40,7 @@ bool FlashFormatterQSPI::checkPartition()
   _wifiFS.unmount();
   _wifiData.deinit();
 
+  /* check OTA partition */
   if (_otaData.init() !=  BD_ERROR_OK || _otaFS.mount(&_otaData) != 0) {
     return false;
   }
@@ -47,6 +52,7 @@ bool FlashFormatterQSPI::checkPartition()
   _otaFS.unmount();
   _otaData.deinit();
 
+  /* check KVStore partition */
   if (_kvstoreData.init() !=  BD_ERROR_OK) {
     return false;
   }
@@ -54,32 +60,55 @@ bool FlashFormatterQSPI::checkPartition()
   if (_kvstoreData.size() < 1 * 1024 * 1024) {
     return false;
   }
-
   _kvstoreData.deinit();
+
+  /* check PLC runtime partition */
+  if (_runtimeData.init() !=  BD_ERROR_OK) {
+    _runtimeFormat = true;
+    return false;
+  }
+  _runtimeData.deinit();
+
   _root->deinit();
   return true;
 }
 
 bool FlashFormatterQSPI::formatPartition() {
-  _root->erase(0x0, _root->get_erase_size());
-  MBRBlockDevice::partition(_root, 1, 0x0B, 0, 1 * 1024 * 1024);
-  MBRBlockDevice::partition(_root, 2, 0x0B, 1 * 1024 * 1024, 6 * 1024 * 1024);
-  MBRBlockDevice::partition(_root, 3, 0x0B, 6 * 1024 * 1024, 7 * 1024 * 1024);
 
-  if (_wifiFS.reformat(&_wifiData) != 0) {
+  if (_root->init() != BD_ERROR_OK) {
     return false;
   }
 
-  if (_otaFS.reformat(&_otaData) != 0) {
+  if (_root->erase(0x0, _root->get_erase_size()) != BD_ERROR_OK) {
+    return false;
+  }
+
+  MBRBlockDevice::partition(_root, 1, 0x0B, 0, 1 * 1024 * 1024);
+  if (_wifiFS.reformat(&_wifiData) != 0) {
     return false;
   }
 
   if (!restoreWifiData()) {
     return false;
   }
-
   _wifiFS.unmount();
+
+  MBRBlockDevice::partition(_root, 2, 0x0B, 1 * 1024 * 1024, 6 * 1024 * 1024);
+  if (_otaFS.reformat(&_otaData) != 0) {
+    return false;
+  }
   _otaFS.unmount();
+
+  MBRBlockDevice::partition(_root, 3, 0x0B, 6 * 1024 * 1024, 7 * 1024 * 1024);
+
+  if (_runtimeFormat) {
+    MBRBlockDevice::partition(_root, 4, 0x0B, 7 * 1024 * 1024, 14 * 1024 * 1024);
+    if (_runtimeFS.reformat(&_runtimeData) != 0) {
+      return false;
+    }
+    _runtimeFS.unmount();
+  }
+
   _root->deinit();
 
   return true;
