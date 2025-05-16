@@ -8,9 +8,9 @@
 #pragma once
 #include <Arduino.h>
 
-class FlashFormatterClass {
+class FlashFormatterBase {
 public:
-  virtual ~FlashFormatterClass() = default;
+  virtual ~FlashFormatterBase() = default;
   virtual bool checkAndFormatPartition() {
     if(checkPartition()){
       return true;
@@ -22,8 +22,6 @@ public:
 
     return checkPartition();
   }
-
-protected:
   virtual bool checkPartition() { return true; };
   virtual bool formatPartition() { return true; };
 };
