@@ -22,8 +22,6 @@ public:
 
     return checkPartition();
   }
-
-protected:
   virtual bool checkPartition() { return true; };
   virtual bool formatPartition() { return true; };
 };
