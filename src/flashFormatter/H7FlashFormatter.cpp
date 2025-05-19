@@ -108,18 +108,28 @@ bool MBEDH7FlashFormatter::checkWifiPartition() {
     return false;
   }
 
-  bool found = false;
+  bool foundBin = false;
   while ((ent = readdir (dir)) != NULL) {
     String fullname = "/wlan/" + String(ent->d_name);
     if (fullname == "/wlan/4343WA1.BIN") {
-      found = true;
+      foundBin = true;
+      break;
+    }
+  }
+
+  // Check if the  ca certificates file is present
+  bool foundCert = false;
+  while ((ent = readdir (dir)) != NULL) {
+    String fullname = "/wlan/" + String(ent->d_name);
+    if (fullname == "/wlan/cacert.pem") {
+      foundCert = true;
       break;
     }
   }
 
   closedir (dir);
   _wifi_data_fs.unmount();
-  return found;
+  return foundBin & foundCert;
 }
 
 bool MBEDH7FlashFormatter::formatWifiPartition() {
