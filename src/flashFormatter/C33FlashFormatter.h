@@ -6,25 +6,10 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #pragma once
-#include "FlashFormatterBase.h"
-#include "BlockDevice.h"
-#include "MBRBlockDevice.h"
-#include "LittleFileSystem.h"
-#include "FATFileSystem.h"
+#include "FlashFormatterQSPI.h"
 
-class C33FlashFormatter : public FlashFormatterClass {
-public:
-  C33FlashFormatter();
-protected:
-  bool checkPartition() override;
-  bool formatPartition() override;
+class C33FlashFormatter : public FlashFormatterQSPI {
 private:
-  bool checkCACertificatesPartition();
-  bool flashCACertificates();
-  BlockDevice* _root;
-  MBRBlockDevice _sys_bd;
-  MBRBlockDevice _user_bd;
-  FATFileSystem _sys_fs;
-  FileSystem * _user_data_fs;
-  MBRBlockDevice _kvStore_bd;
+  bool checkWiFiData() override;
+  bool restoreWifiData() override;
 };

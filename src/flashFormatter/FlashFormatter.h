@@ -15,5 +15,5 @@ using FlashFormatter = MBEDH7FlashFormatter;
 using FlashFormatter = C33FlashFormatter;
 #else
 #include "FlashFormatterBase.h"
-using FlashFormatter = FlashFormatterClass;
+using FlashFormatter = FlashFormatterBase;
 #endif
