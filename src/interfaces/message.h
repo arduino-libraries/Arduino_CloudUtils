@@ -29,6 +29,8 @@ struct Message {
  * and boundaries and avoid value clashing
  */
 enum : MessageId {
+  ArduinoMessageStartId             = 0x000,
   ArduinoIOTCloudStartMessageId     = 0x100,
   ArduinoProvisioningStartMessageId = 0x200,
+  ArduinoVersionsStartId            = 0x300,
 };
