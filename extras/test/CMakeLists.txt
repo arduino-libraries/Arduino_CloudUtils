@@ -30,6 +30,7 @@ set(TEST_SRCS
   src/hex/test_hex.cpp
   src/cbor/test_cbor_encoder.cpp
   src/cbor/test_cbor_decoder.cpp
+  src/cbor/test_cbor_standard_enc.cpp
   src/time/test_TimedAttempt.cpp
 )
 
@@ -40,6 +41,7 @@ set(TEST_DUT_SRCS
   ../../src/hex/chex.h
   ../../src/cbor/MessageDecoder.cpp
   ../../src/cbor/MessageEncoder.cpp
+  ../../src/cbor/standards/StandardEncoders.cpp
   ../../src/cbor/tinycbor
   ../../src/cbor/tinycbor/src/cborencoder.c
   ../../src/cbor/tinycbor/src/cborencoder_close_container_checked.c
