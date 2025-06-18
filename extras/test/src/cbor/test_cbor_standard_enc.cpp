@@ -20,9 +20,9 @@ SCENARIO("Test the encoding of command messages") {
 
   WHEN("Encode a message with provisioning wifi fw version ")
   {
-    WiFiFWVersionMessage command;
+    VersionMessage command;
     command.c.id = StandardMessageId::WiFiFWVersionMessageId;
-    command.params.wiFiFWVersion = "1.6.0";
+    command.params.version = "1.6.0";
     uint8_t buffer[512];
     size_t bytes_encoded = sizeof(buffer);
 

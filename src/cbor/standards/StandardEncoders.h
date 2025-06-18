@@ -12,10 +12,10 @@
 
 #include "StandardMessages.h"
 
-class WiFiFWVersionMessageEncoder: public CBORMessageEncoderInterface {
+class VersionMessageEncoder: public CBORMessageEncoderInterface {
 public:
-  WiFiFWVersionMessageEncoder()
-  : CBORMessageEncoderInterface(CBORWiFiFWVersionMessage, WiFiFWVersionMessageId) {}
+  VersionMessageEncoder(CBORStandardMessageTag tag, StandardMessageId id)
+  : CBORMessageEncoderInterface(tag, id) {}
 protected:
   MessageEncoder::Status encode(CborEncoder* encoder, Message *msg) override;
 };

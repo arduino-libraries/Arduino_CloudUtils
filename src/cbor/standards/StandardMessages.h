@@ -21,9 +21,9 @@ enum StandardMessageId: MessageId {
   WiFiFWVersionMessageId = ArduinoStandardMessageStartId,
 };
 
-struct WiFiFWVersionMessage {
+struct VersionMessage {
   Message c;
   struct {
-    const char *wiFiFWVersion; //The payload is a string.
+    const char *version; //The payload is a string.
   } params;
 };

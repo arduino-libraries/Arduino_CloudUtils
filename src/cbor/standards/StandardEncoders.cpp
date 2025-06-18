@@ -10,15 +10,15 @@
 
 #include "StandardEncoders.h"
 
-MessageEncoder::Status WiFiFWVersionMessageEncoder::encode(CborEncoder* encoder, Message *msg) {
-  WiFiFWVersionMessage * wiFiFWVersionMsg = (WiFiFWVersionMessage*) msg;
+MessageEncoder::Status VersionMessageEncoder::encode(CborEncoder* encoder, Message *msg) {
+  VersionMessage * versionMsg = (VersionMessage*) msg;
   CborEncoder array_encoder;
 
   if(cbor_encoder_create_array(encoder, &array_encoder, 1) != CborNoError) {
       return MessageEncoder::Status::Error;
   }
 
-  if(cbor_encode_text_stringz(&array_encoder, wiFiFWVersionMsg->params.wiFiFWVersion) != CborNoError) {
+  if(cbor_encode_text_stringz(&array_encoder, versionMsg->params.version) != CborNoError) {
       return MessageEncoder::Status::Error;
   }
 
@@ -29,4 +29,4 @@ MessageEncoder::Status WiFiFWVersionMessageEncoder::encode(CborEncoder* encoder,
   return MessageEncoder::Status::Complete;
 }
 
-static WiFiFWVersionMessageEncoder wifiFWVersionMessageEncoderCbor;
+static VersionMessageEncoder wifiFWVersionMessageEncoderCbor(CBORWiFiFWVersionMessage, WiFiFWVersionMessageId);
