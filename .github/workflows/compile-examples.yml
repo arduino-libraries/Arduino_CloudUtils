@@ -30,6 +30,7 @@ jobs:
         - examples/customCborEncoder
         - examples/timedBlink
         - examples/flashFormatter
+        - examples/versionCborEncoder
       SKETCHES_REPORTS_PATH: sketches-reports
 
     strategy:
