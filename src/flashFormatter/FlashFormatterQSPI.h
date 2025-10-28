@@ -10,6 +10,9 @@
 #include <BlockDevice.h>
 #include <MBRBlockDevice.h>
 #include <FATFileSystem.h>
+#ifdef ARDUINO_OPTA
+#include <LittleFileSystem.h>
+#endif
 
 #if !defined(ARDUINO_PORTENTA_C33)
 using namespace mbed;
@@ -36,7 +39,12 @@ private:
   FATFileSystem _otaFS;
   MBRBlockDevice _kvstoreData;
   MBRBlockDevice _runtimeData;
+#ifdef ARDUINO_OPTA
+  // For compatibility with Opta's PLC runtime, use LittleFS
+  LittleFileSystem _runtimeFS;
+#else
   FATFileSystem _runtimeFS;
+#endif
   bool _runtimeFormat;
 };
 
