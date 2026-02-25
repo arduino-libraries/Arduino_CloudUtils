@@ -92,7 +92,7 @@ namespace arduino { namespace lzss {
         std::function<void(const uint8_t)> put_char_cbk;
         std::function<uint8_t()> get_char_cbk;
 
-        inline void putc(const uint8_t c) { if(put_char_cbk) { put_char_cbk(c); } }
+        inline void _putc(const uint8_t c) { if(put_char_cbk) { put_char_cbk(c); } }
 
         // get the number of bits the FSM will require given its state
         uint8_t bits_required(FSM_STATES s);
