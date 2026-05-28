@@ -10,6 +10,10 @@
 #include "H7FlashFormatter.h"
 #include "certificates.h"
 
+#if defined(ARDUINO_OPTA)
+#include <WiFi.h>
+#endif
+
 bool MBEDH7FlashFormatter::checkWiFiData()
 {
   bool ret = false;
@@ -17,6 +21,13 @@ bool MBEDH7FlashFormatter::checkWiFiData()
   if (!ret) {
     return false;
   }
+
+  #if defined(ARDUINO_OPTA)
+  // Skip for Opta Lite and RS485 since they don't have WiFi
+  if(WiFi.status() == WL_NO_MODULE){
+    return true;
+  }
+  #endif
   ret = checkFile("/wlan", "4343WA1.BIN");
   return ret;
 }
