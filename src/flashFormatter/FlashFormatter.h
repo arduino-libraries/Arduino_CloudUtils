@@ -6,7 +6,12 @@
   file, You can obtain one at http://mozilla.org/MPL/2.0/.
 */
 #pragma once
-#if defined(ARDUINO_PORTENTA_H7_M7) || defined(ARDUINO_NICLA_VISION) \
+
+#if defined(ARDUINO_ARCH_ZEPHYR)
+#warning "Zephyr doesn't support FlashFormatter yet"
+#include "FlashFormatterBase.h"
+using FlashFormatter = FlashFormatterBase;
+#elif defined(ARDUINO_PORTENTA_H7_M7) || defined(ARDUINO_NICLA_VISION) \
   || defined(ARDUINO_OPTA) || defined(ARDUINO_GIGA)
 #include "H7FlashFormatter.h"
 using FlashFormatter = MBEDH7FlashFormatter;

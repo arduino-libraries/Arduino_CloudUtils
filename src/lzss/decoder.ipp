@@ -66,7 +66,7 @@ typename GenericDecoder<EI, EJ, N, F>::status GenericDecoder<EI, EJ, N, F>::hand
             }
             break;
         case FSM_1:
-            putc(c);
+            this->_putc(c);
             buffer[r++] = c;
             r &= (N - 1); // equivalent to r = r % N when N is a power of 2
 
@@ -85,7 +85,7 @@ typename GenericDecoder<EI, EJ, N, F>::status GenericDecoder<EI, EJ, N, F>::hand
             // TODO improve this section of code
             for (int k = 0; k <= j + 1; k++) {
                 c = buffer[(this->i + k) & (N - 1)]; // equivalent to buffer[(i+k) % N] when N is a power of 2
-                putc(c);
+                this->_putc(c);
                 buffer[r++] = c;
                 r &= (N - 1); // equivalent to r = r % N
             }
