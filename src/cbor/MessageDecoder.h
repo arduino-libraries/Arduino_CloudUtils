@@ -107,9 +107,13 @@ public:
    */
   MessageDecoder::Status decode(Message* msg, const uint8_t* const buf, size_t &len);
 private:
-  CBORMessageDecoderSingleton() {}
+  CBORMessageDecoderSingleton(): decoders(nullptr), decoders_last(nullptr) { }
 
-  std::vector<std::pair<CBORTag, CBORMessageDecoderInterface*>> decoders;
+  struct llnode {
+    struct llnode* next;
+    CBORTag tag;
+    CBORMessageDecoderInterface* decoder;
+  } *decoders, *decoders_last;
 };
 
 /**
