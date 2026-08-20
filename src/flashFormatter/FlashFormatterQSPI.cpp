@@ -173,7 +173,7 @@ bool FlashFormatterQSPI::writeFlash(const uint8_t* data, size_t size, size_t off
   while (byteCount < size) {
     if(byteCount + chunkSize > size)
       chunkSize = size - byteCount;
-    int ret = _root->program(data, offset + byteCount, chunkSize);
+    int ret = _root->program(&data[byteCount], offset + byteCount, chunkSize);
     if (ret != 0) {
       return false;
     }
