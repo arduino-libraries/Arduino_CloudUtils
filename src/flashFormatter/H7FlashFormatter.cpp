@@ -9,7 +9,7 @@
   || defined(ARDUINO_OPTA) || defined(ARDUINO_GIGA)) && \
   !defined(ARDUINO_ARCH_ZEPHYR)
 #include "H7FlashFormatter.h"
-#include "certificates.h"
+#include "certificates/certificates.h"
 
 #if defined(ARDUINO_OPTA)
 #include <WiFi.h>
