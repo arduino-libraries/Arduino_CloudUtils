@@ -7,6 +7,12 @@
 */
 #pragma once
 
+#if (defined(ARDUINO_PORTENTA_H7_M7) || defined(ARDUINO_NICLA_VISION) \
+  || defined(ARDUINO_OPTA) || defined(ARDUINO_GIGA)) && \
+  defined(ARDUINO_ARCH_ZEPHYR)
+#include "FlashFormatterZephyrMigrate.h"
+#endif
+
 #if defined(ARDUINO_ARCH_ZEPHYR)
 #warning "Zephyr doesn't support FlashFormatter yet"
 #include "FlashFormatterBase.h"
