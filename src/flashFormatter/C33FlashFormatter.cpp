@@ -8,7 +8,7 @@
 #if defined(ARDUINO_PORTENTA_C33) && \
   !defined(ARDUINO_ARCH_ZEPHYR)
 #include "C33FlashFormatter.h"
-#include "certificates.h"
+#include "certificates/certificates.h"
 
 bool C33FlashFormatter::checkWiFiData()
 {
